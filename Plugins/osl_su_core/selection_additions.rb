@@ -8,14 +8,14 @@
 # IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
 # WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 #-----------------------------------------------------------------------------
-# Name        :   Selection Additions 1.0
+# Name        :   OSL SU Selection Additions 1.0 alpha
 # Description :   This file defines some additional methods for Sketchup::Selection
 # Menu Item   :   NONE
 # Context Menu:   NONE
 # Usage       :   
 #             :   
 #             :   
-# Date        :   26.08.2009
+# Date        :   27.08.2009
 # Type        :   Utils
 #-----------------------------------------------------------------------------
 
@@ -119,5 +119,5 @@ class Sketchup::Selection
     object
   end
   
-end # class Sketchup::Selection
+end # of class Sketchup::Selection
 

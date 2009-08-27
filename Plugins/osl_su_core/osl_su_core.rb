@@ -11,3 +11,10 @@
 
 # Ядро библиотеки, содержащее модули, классы и методы, используемые в 
 # плагинах, инструментах и расширениях.
+
+# selection_additions.rb добавляет методы для получения 
+# выделенных элементов
+require 'osl_su_core/selection_additions.rb'
+
+# bezier_curve.rb класс кривых Безье
+require 'osl_su_core/bezier_curve.rb'
