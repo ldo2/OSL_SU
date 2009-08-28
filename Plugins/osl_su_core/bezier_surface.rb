@@ -43,9 +43,9 @@ class BezierSurface
   def initialize(*args)
     if args.size == 1 && args.first.kind_of?(Hash)
       initialize_from_hash(args.first)
-    else if (1..3).include?(args.size) && args.first.kind_of?(Array) && args.first[0].kind_of?(Array)
+    elsif (1..3).include?(args.size) && args.first.kind_of?(Array) && args.first[0].kind_of?(Array)
       initialize_from_array(*args)
-    else if args.size >= 2 
+    elsif args.size >= 2 
       initialize_from_list(*args)
     end
   end
