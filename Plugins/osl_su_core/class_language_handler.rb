@@ -34,20 +34,26 @@ require 'langhandler.rb'
 #
 module ClassLanguageHandler
 
-  def self.create_language_handler
-     str_file_name =  self.methods.include?("strings_file") self.strings_file : self.name
-     LanguageHandler.new(str_file_name + (str_file_name =~ /\.strings$/ ? "" : ".strings"))
-  end
-
-  def self.get_string(str)
-    begin
-      @@strings ||= self.create_language_handler
-      @@strings.GetString(str)
-    rescue
-      str
+  module ClassMethods
+    def create_language_handler
+      str_file_name =  self.methods.include?("strings_file") self.strings_file : self.name
+      LanguageHandler.new(str_file_name + (str_file_name =~ /\.strings$/ ? "" : ".strings"))
     end
+
+    def get_string(str)
+      begin
+        @@strings ||= create_language_handler
+        @@strings.GetString(str)
+      rescue
+        str
+      end
+    end 
   end
   
+  def self.included(base)
+    base.extend(ClassLanguageHandler::ClassMethods)
+  end
+
   def get_string(str)
     self.class.get_string(str)
   end

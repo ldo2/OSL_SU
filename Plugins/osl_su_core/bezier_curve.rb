@@ -145,11 +145,13 @@ class BezierCurve
   end
   
   def self.load(curve)
-    if !curve.kind_of?(Sketchup::Curve) || curve.get_attribute("osl", "class") != self.class.name
+    if !curve.kind_of?(Sketchup::Curve) || curve.get_attribute("osl", "class") != self.name
       return nil 
     end
     # создаем кривую по сохраненным данным
-    self.new(*curve.get_attribute("osl", "points"), curve.get_attribute("osl", "steps_count"))
+    args = curve.get_attribute("osl", "points")
+    args << curve.get_attribute("osl", "steps_count")
+    self.new(*args)
   end
   
 end
