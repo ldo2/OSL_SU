@@ -18,3 +18,9 @@ require 'osl_su_core/selection_additions.rb'
 
 # bezier_curve.rb класс кривых Безье
 require 'osl_su_core/bezier_curve.rb'
+
+# bezier_surface.rb поверхности Безье
+require 'osl_su_core/bezier_surface.rb'
+
+# bezier_surface.rb треугольные поверхности Безье
+require 'osl_su_core/bezier_triangle.rb'

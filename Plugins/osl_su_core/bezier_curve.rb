@@ -124,7 +124,7 @@ class BezierCurve
     q = 1.0 - t
     power_t = 1.0
     x, y, z = 0, 0, 0
-    @points.each_with_index do |i, point|
+    @points.each_with_index do |point, i|
       b_i = BinomialCoefficient.coefficient(degree, i)*power_t
       x = x*q + b_i*point.x
       y = y*q + b_i*point.y

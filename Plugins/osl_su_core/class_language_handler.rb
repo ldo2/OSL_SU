@@ -36,7 +36,7 @@ module ClassLanguageHandler
 
   module ClassMethods
     def create_language_handler
-      str_file_name =  self.methods.include?("strings_file") self.strings_file : self.name
+      str_file_name =  self.methods.include?("strings_file") ? self.strings_file : self.name
       LanguageHandler.new(str_file_name + (str_file_name =~ /\.strings$/ ? "" : ".strings"))
     end
 

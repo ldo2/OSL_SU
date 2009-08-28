@@ -134,7 +134,7 @@ class BezierSurface
 
     points = Array.new(@steps_u + 1) do
       v = 0.0
-      v_points = Array.new(@staps_v + 1) do
+      v_points = Array.new(@steps_v + 1) do
         point = calculate_point(u, v)
         mesh.add_point(point)
         v += dv
@@ -145,7 +145,7 @@ class BezierSurface
     end
 
     for i in 0 ... @steps_u
-      for j in 0 ... @staps_v
+      for j in 0 ... @steps_v
         mesh.add_polygon(
           mesh.point_index(points[i][j]),
           mesh.point_index(points[i+1][j]),
@@ -184,11 +184,12 @@ class BezierSurface
 
     t, s = 1.0 - u, 1.0 - v
     power_u, power_v = 1.0, 1.0
+    u_degree, v_degree = @points.size-1, @points.first.size-1
 
-    @points.each_with_index do |i, points_row|
+    @points.each_with_index do |points_row, i|
       x_sum_j, y_sum_j, z_sum_j = 0.0, 0.0, 0.0
       power_v = 1.0
-      points_row.each_with_index do |j, point|
+      points_row.each_with_index do |point, j|
         b_j = BinomialCoefficient.coefficient(v_degree, j)*power_v
         x_sum_j = x_sum_j*s + b_j*point.x
         y_sum_j = y_sum_j*s + b_j*point.y
@@ -197,7 +198,7 @@ class BezierSurface
       end
 
       b_i = BinomialCoefficient.coefficient(u_degree, i)*power_u
-      x, y, x = x*t + b_i*x_sum_j, y*t + b_i*y_sum_j, z*t + b_i*z_sum_j
+      x, y, z = x*t + b_i*x_sum_j, y*t + b_i*y_sum_j, z*t + b_i*z_sum_j
       power_u *= u 
     end
 
