@@ -70,14 +70,14 @@ class BezierCurve
   end
   
   # Создать кривую Безье в SketchUp'е
-  def create_curve
+  def draw
     model = Sketchup.active_model
     entities = model.entities
     
-    model.start_operation(get_string("Bezier Curve"))
+    model.start_operation(get_string("Draw" + self.class.name))
     
     edges = entities.add_curve(curve_points)
-    save_in_curve(edges.first.curve)
+    save(edges.first.curve)
     
     model.commit_operation
     
@@ -135,7 +135,7 @@ class BezierCurve
     Geom::Point3d.new(x, y, z)
   end
 
-  def save_in_curve(curve)
+  def save(curve)
     return false if !curve.kind_of?(Sketchup::Curve)
     # сохраняем переменные
     curve.set_attribute("osl", "class", self.class.name)
@@ -175,15 +175,16 @@ class CubicBezierCurve < BezierCurve
     #~ end
 
     # Вычисляем координаты точки по параметризации:
-    # B(t)= \sum^n_{i=0} [ P_i * C(n, i) * t^i * (1-t)^(n-i) ] , 0<t<1, 
+    # B(t)= P_0*q^3 + 3*P_1*q^2*t + 3*P_2*q*t^2 + P_3*t^3 , 0<t<1, 
     # где C(n, i) - число сочетаний из n по i (биномиальный коэффициент).
     q = 1.0 - t
-    qqq, tqq, ttq, ttt = q*q*q, t*q*q, t*t*q, t*t*t
+    tt, qq = t*t, q*q
+    c1, c2, c3, c4 = qq*q, 3.0*t*qq, 3.0*tt*q, tt*t
     
     Geom::Point3d.new(
-      @points[0].x*qqq + 3.0*@points[1].x*tqq + 3.0*@points[2].x*ttq + @points[3].x*ttt,
-      @points[0].y*qqq + 3.0*@points[1].y*tqq + 3.0*@points[2].y*ttq + @points[3].y*ttt,
-      @points[0].z*qqq + 3.0*@points[1].z*tqq + 3.0*@points[2].z*ttq + @points[3].z*ttt
+      @points[0].x*c1 + @points[1].x*c2 + @points[2].x*c3 + @points[3].x*c4,
+      @points[0].y*c1 + @points[1].y*c2 + @points[2].y*c3 + @points[3].y*c4,
+      @points[0].z*c1 + @points[1].z*c2 + @points[2].z*c3 + @points[3].z*c4
     )
   end
 end
