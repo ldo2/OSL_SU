@@ -15,7 +15,7 @@
 # Usage       :
 #             :
 #             :
-# Date        :   28.08.2009
+# Date        :   12.09.2009
 # Type        :   Utils
 #-----------------------------------------------------------------------------
 
@@ -55,7 +55,15 @@ end
 # Класс кубических треугольников Безье, барицентрических поверхностей Безье 3-го порядка
 # В данном классе внесены некоторые упрощения
 #
-class CubicBezierTriangle < BezierTriangle
+class BicubicBezierTriangle < BezierTriangle
+  
+  def degree_u
+    3
+  end
+
+  def degree_v
+    3
+  end
 
   def calculate_point(u, v)
     # преобразуем аргументы в дробные числа

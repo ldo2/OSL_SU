@@ -15,7 +15,7 @@
 # Usage       :
 #             :
 #             :
-# Date        :   28.08.2009
+# Date        :   12.09.2009
 # Type        :   Utils
 #-----------------------------------------------------------------------------
 
@@ -102,6 +102,14 @@ class BezierSurface
 
   public
 
+  def degree_u
+    @points.size-1
+  end
+
+  def degree_v
+    @points.first.size-1
+  end
+
   def validate_points
     # not implemented
     true
@@ -184,7 +192,7 @@ class BezierSurface
 
     t, s = 1.0 - u, 1.0 - v
     power_u, power_v = 1.0, 1.0
-    u_degree, v_degree = @points.size-1, @points.first.size-1
+    u_degree, v_degree = degree_u, degree_v
 
     @points.each_with_index do |points_row, i|
       x_sum_j, y_sum_j, z_sum_j = 0.0, 0.0, 0.0
