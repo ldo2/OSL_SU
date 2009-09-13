@@ -15,7 +15,7 @@
 # Usage       :
 #             :
 #             :
-# Date        :   12.09.2009
+# Date        :   13.09.2009
 # Type        :   Utils
 #-----------------------------------------------------------------------------
 
@@ -41,6 +41,44 @@ class BezierTriangle < BezierSurface
   def validate_steps
     # not implemented
     true
+  end
+
+  def face_mesh
+    mesh = Geom::PolygonMesh.new
+
+    du, dv = 1.0/@steps_u, 1.0/@steps_v
+    u, v = 0.0, 0.0
+
+    points = Array.new(@steps_u + 1) do |i|
+      v = 0.0
+      v_points = Array.new(@steps_v + 1 - i) do
+        point = calculate_point(u, v)
+        mesh.add_point(point)
+        v += dv
+        point
+      end
+      u += du
+      v_points
+    end
+
+    for i in 0 ... @steps_u
+      for j in 0 ... @steps_v
+        mesh.add_polygon(
+          mesh.point_index(points[i][j]),
+          mesh.point_index(points[i][j+1]),
+          mesh.point_index(points[i+1][j])
+        )
+        unless points[i+1][j+1].nil?
+          mesh.add_polygon(
+            mesh.point_index(points[i+1][j]),
+            mesh.point_index(points[i][j+1]),
+            mesh.point_index(points[i+1][j+1])
+          )
+        end
+      end
+    end
+
+    mesh
   end
 
   def calculate_point(u, v)
