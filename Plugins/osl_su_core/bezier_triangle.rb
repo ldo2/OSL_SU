@@ -62,7 +62,7 @@ class BezierTriangle < BezierSurface
     end
 
     for i in 0 ... @steps_u
-      for j in 0 ... @steps_v
+      for j in 0 ... @steps_v - i
         mesh.add_polygon(
           mesh.point_index(points[i][j]),
           mesh.point_index(points[i][j+1]),
